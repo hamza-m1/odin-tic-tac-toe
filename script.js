@@ -10,10 +10,12 @@ function gameBoard() {
         }
     }
 
-    return board
+    const getBoard = () => board
+
+    return {getBoard}
 }
 
-gameBoard()
+
 
 
 
