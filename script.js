@@ -27,7 +27,21 @@ function gameBoard() {
         return chosenCell
     }
 
-    return {getBoard, addMarker}
+    const printBoard = () => {
+        // const boardWithCellValues = board.map((row) => row.map((cell) => {
+            
+        }
+
+    return {getBoard, addMarker, printBoard}
+}
+
+function cell() {
+    let value = 0
+
+    const markCell = (player) => value = player
+    const getValue = () => value
+
+    return {markCell, getValue}
 }
 
 
