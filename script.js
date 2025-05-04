@@ -28,7 +28,7 @@ function GameBoard() {
         const boardWithCellValues = board.map((row) => {
             return row.map((Cell) => Cell.getValue())
         })
-        console.log(boardWithCellValues)
+        console.table(boardWithCellValues)
     }
 
     return {getBoard, addMarker, printBoard}
@@ -66,7 +66,14 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         console.log(`${getActivePlayer().name}'s turn. `)
     }
 
-    return {getActivePlayer, switchActivePlayer, printNewRound}
+    const playRound = (row, column) => {
+        console.log(`Adding ${getActivePlayer().name}'s mark to row:${row+1} column:${column+1} ...`)
+        
+        board.addMarker(row, column, getActivePlayer().mark)
+
+    }
+
+    return {getActivePlayer, switchActivePlayer, printNewRound, playRound}
 }
 
 
