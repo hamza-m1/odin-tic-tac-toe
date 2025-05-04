@@ -6,31 +6,32 @@ function gameBoard() {
     for (let i = 0; i < rows; i++) {
         board[i] = []
         for (let j = 0; j < columns; j++) {
-            board[i].push(`row:${i}, column:${j}`)
-            //push(cell())
+            board[i].push(cell())
         }
     }
 
     const getBoard = () => board
 
     const addMarker = (row, column, player) => {
-        const chosenCell = board[row][column]
+        const chosenCell = board[row][column].getValue()
+        // const chosenCellValue = chosenCell.getValue()
         // console.log(chosenCell)
 
-        if (chosenCell === 0) {
-            console.log('error, choose a free cell')
-        }
-
         if (chosenCell === 1 || chosenCell === 2) {
-            //markCell(player)
+            console.log('error, choose a free cell')            
+        } 
+        if (chosenCell === 0) {
+            board[row][column].markCell(player)
         }
-        return chosenCell
+        // return chosenCell
     }
 
     const printBoard = () => {
-        // const boardWithCellValues = board.map((row) => row.map((cell) => {
-            
-        }
+        const boardWithCellValues = board.map((row) => {
+            return row.map((cell) => cell.getValue())
+        })
+        console.log(boardWithCellValues)
+    }
 
     return {getBoard, addMarker, printBoard}
 }
@@ -44,9 +45,10 @@ function cell() {
     return {markCell, getValue}
 }
 
+const game = gameBoard()
+game.addMarker(1,2,'harry')
+game.printBoard()
 
-gameBoard().addMarker(1,2,'harry')
-// console.log(gameBoard().addMarker())
 
 
 
