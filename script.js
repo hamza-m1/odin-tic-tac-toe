@@ -43,6 +43,27 @@ function Cell() {
     return {markCell, getValue}
 }
 
+function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
+    const players = [{
+        name: playerOne,
+        mark: 1
+    }, {
+        name: playerTwo,
+        mark: 2
+    }]
+    const board = GameBoard()
+
+    let activePlayer = players[0]
+
+    const switchActivePlayer = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0]
+    }
+
+    const getActivePlayer = () => activePlayer
+
+    return {getActivePlayer, switchActivePlayer}
+}
+
 
 
 
@@ -50,6 +71,9 @@ function Cell() {
 const game = GameBoard()
 game.addMarker(1,2,1)
 game.printBoard()
+
+const gc = GameController()
+
 // game.addMarker(1,2,2)
 // game.printBoard()
 
