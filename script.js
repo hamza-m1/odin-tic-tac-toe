@@ -61,7 +61,12 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 
     const getActivePlayer = () => activePlayer
 
-    return {getActivePlayer, switchActivePlayer}
+    const printNewRound = () => {
+        board.printBoard()
+        console.log(`${getActivePlayer().name}'s turn. `)
+    }
+
+    return {getActivePlayer, switchActivePlayer, printNewRound}
 }
 
 
@@ -69,10 +74,11 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 
 
 const game = GameBoard()
-game.addMarker(1,2,1)
-game.printBoard()
+// game.addMarker(1,2,1)
+// game.printBoard()
 
 const gc = GameController()
+gc.printNewRound()
 
 // game.addMarker(1,2,2)
 // game.printBoard()
