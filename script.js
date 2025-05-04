@@ -1,4 +1,4 @@
-function gameBoard() {
+function GameBoard() {
     const rows = 3
     const columns = 3
     const board = []
@@ -6,29 +6,27 @@ function gameBoard() {
     for (let i = 0; i < rows; i++) {
         board[i] = []
         for (let j = 0; j < columns; j++) {
-            board[i].push(cell())
+            board[i].push(Cell())
         }
     }
 
     const getBoard = () => board
 
     const addMarker = (row, column, player) => {
-        const chosenCell = board[row][column].getValue()
-        // const chosenCellValue = chosenCell.getValue()
-        // console.log(chosenCell)
+        let chosenCell = board[row][column].getValue()
 
         if (chosenCell === 1 || chosenCell === 2) {
-            console.log('error, choose a free cell')            
+            console.log('error, choose a free Cell')
+            return
         } 
         if (chosenCell === 0) {
             board[row][column].markCell(player)
         }
-        // return chosenCell
     }
 
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => {
-            return row.map((cell) => cell.getValue())
+            return row.map((Cell) => Cell.getValue())
         })
         console.log(boardWithCellValues)
     }
@@ -36,7 +34,7 @@ function gameBoard() {
     return {getBoard, addMarker, printBoard}
 }
 
-function cell() {
+function Cell() {
     let value = 0
 
     const markCell = (player) => value = player
@@ -45,12 +43,15 @@ function cell() {
     return {markCell, getValue}
 }
 
-const game = gameBoard()
-game.addMarker(1,2,'harry')
+
+
+
+
+const game = GameBoard()
+game.addMarker(1,2,1)
 game.printBoard()
-
-
-
+// game.addMarker(1,2,2)
+// game.printBoard()
 
 
 
@@ -60,5 +61,5 @@ const testButton = document.querySelector('.test-button')
 
 testButton.addEventListener('click', () => {
     console.log('hhhhh')
-    gameBoard()
+    GameBoard()
 })
