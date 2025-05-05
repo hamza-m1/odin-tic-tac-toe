@@ -99,7 +99,6 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         boardArrayRows.forEach((row) => {
             if (row[0] === row[1] && row[1] === row[2] && row[0] !== 0) {
                 winCheck = true
-                console.log('AAAAAAAAAAAAAaaaaaaaaaaaaaaaa')
                 return
             }
         })
@@ -107,14 +106,27 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         boardArrayColumns.forEach((col) => {
             if (col[0] === col[1] && col[1] === col[2] && col[0] !== 0) {
                 winCheck = true
-                console.log('AAAAAAAAAAAAAaaaaaaaaaaaaaaaa colllll')
                 return
             }
         })
 
+        const diagonal1 = [
+            boardArrayRows[0][0],
+            boardArrayRows[1][1],
+            boardArrayRows[2][2]
+        ]
 
+        const diagonal2 = [
+            boardArrayRows[0][2],
+            boardArrayRows[1][1],
+            boardArrayRows[2][0]
+        ]
 
+        const allEqual = (arr) => arr.every( v => v === arr[0] )
+        if (allEqual(diagonal1) && diagonal1[0] !== 0) winCheck = true
+        if (allEqual(diagonal2) && diagonal2[0] !== 0) winCheck = true
 
+        return winCheck
     }
 
     const playRound = (row, column) => {
@@ -123,7 +135,9 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         const errorCheck = board.addMarker(row, column, getActivePlayer().mark)
         if (errorCheck === 'error') return
 
-        checkForWinner()
+        if (checkForWinner()) {
+            console.log('YOU WONNNNNNNN')
+        }
 
         switchActivePlayer()
         printNewRound()
@@ -144,11 +158,13 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 
 const gc = GameController()
 gc.playRound(0,0)
-gc.playRound(1,1)
-gc.playRound(2,2)
-gc.playRound(2,1)
-gc.playRound(0,2)
 gc.playRound(0,1)
+gc.playRound(1,1)
+gc.playRound(0,2)
+gc.playRound(2,2)
+gc.playRound(1,2)
+
+
 
 
 
