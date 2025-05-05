@@ -37,7 +37,26 @@ function GameBoard() {
         })
     }
 
-    return {getBoard, addMarker, printBoard, getBoardWithMarks}
+    const getBoardWithMarksColumn = () => {
+        let column1 = []
+        let column2 = []
+        let column3 = []
+        board.forEach((row) => {
+            column1.push(row[0].getValue())
+            column2.push(row[1].getValue())
+            column3.push(row[2].getValue())
+        })
+        const columnBoard = [column1, column2, column3]
+        return columnBoard
+    }
+
+    return {
+        getBoard, 
+        addMarker, 
+        printBoard, 
+        getBoardWithMarks, 
+        getBoardWithMarksColumn
+    }
 }
 
 function Cell() {
@@ -74,14 +93,28 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 
     const checkForWinner = () => {
         let winCheck = false
-        const boardArray = board.getBoardWithMarks()
+        const boardArrayRows = board.getBoardWithMarks()
+        const boardArrayColumns = board.getBoardWithMarksColumn()
         
-        boardArray.forEach((row) => {
+        boardArrayRows.forEach((row) => {
             if (row[0] === row[1] && row[1] === row[2] && row[0] !== 0) {
                 winCheck = true
                 console.log('AAAAAAAAAAAAAaaaaaaaaaaaaaaaa')
+                return
             }
         })
+
+        boardArrayColumns.forEach((col) => {
+            if (col[0] === col[1] && col[1] === col[2] && col[0] !== 0) {
+                winCheck = true
+                console.log('AAAAAAAAAAAAAaaaaaaaaaaaaaaaa colllll')
+                return
+            }
+        })
+
+
+
+
     }
 
     const playRound = (row, column) => {
@@ -104,18 +137,20 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 
 
 
-const game = GameBoard()
+// const game = GameBoard()
+// console.log(game.getBoardWithMarksColumn())
 // game.addMarker(1,2,1)
 // game.printBoard()
 
 const gc = GameController()
-// gc.printNewRound()
 gc.playRound(0,0)
 gc.playRound(1,1)
-gc.playRound(0,1)
+gc.playRound(2,2)
 gc.playRound(2,1)
 gc.playRound(0,2)
-// gc.playRound(2,1)
+gc.playRound(0,1)
+
+
 
 
 
