@@ -76,15 +76,21 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         name: playerTwo,
         mark: 2
     }]
+
     const board = GameBoard()
     let activePlayer = players[0]
-    let isGameOver = false
+    let gameOver = false
+    let round = 0
 
     const switchActivePlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0]
     }
 
     const getActivePlayer = () => activePlayer
+
+    const isGameOver = () => gameOver
+
+    const roundCount = () => round
 
     const printNewRound = () => {
         board.printBoard()
@@ -130,23 +136,31 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
     }
 
     const playRound = (row, column) => {
-        if (isGameOver) return
+        if (gameOver) return
+
+        if (round === 0) console.log(`${getActivePlayer().name}'s turn. `)
+
         console.log(`Adding ${getActivePlayer().name}'s mark to row:${row+1} column:${column+1} ...`)
         
         const errorCheck = board.addMarker(row, column, getActivePlayer().mark)
         if (errorCheck === 'error') return
 
+        round++
+
         if (checkForWinner()) {
             console.log('YOU WONNNNNNNN')
             board.printBoard()
-            isGameOver = true
+            gameOver = true
+        } else if(round === 9) {
+            console.log(`It's a DRAWWWWWWWWWWW`)
+            gameOver = true
         } else {
             switchActivePlayer()
             printNewRound()
         }
     }
 
-    return {getActivePlayer, printNewRound, playRound}
+    return {getActivePlayer, printNewRound, playRound, isGameOver, roundCount}
 }
 
 
