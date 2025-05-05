@@ -77,8 +77,8 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         mark: 2
     }]
     const board = GameBoard()
-
     let activePlayer = players[0]
+    let isGameOver = false
 
     const switchActivePlayer = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0]
@@ -130,6 +130,7 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
     }
 
     const playRound = (row, column) => {
+        if (isGameOver) return
         console.log(`Adding ${getActivePlayer().name}'s mark to row:${row+1} column:${column+1} ...`)
         
         const errorCheck = board.addMarker(row, column, getActivePlayer().mark)
@@ -137,14 +138,15 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 
         if (checkForWinner()) {
             console.log('YOU WONNNNNNNN')
+            board.printBoard()
+            isGameOver = true
+        } else {
+            switchActivePlayer()
+            printNewRound()
         }
-
-        switchActivePlayer()
-        printNewRound()
-
     }
 
-    return {getActivePlayer, switchActivePlayer, printNewRound, playRound}
+    return {getActivePlayer, printNewRound, playRound}
 }
 
 
@@ -163,6 +165,7 @@ gc.playRound(1,1)
 gc.playRound(0,2)
 gc.playRound(2,2)
 gc.playRound(1,2)
+
 
 
 
