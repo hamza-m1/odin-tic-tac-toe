@@ -12,15 +12,15 @@ function GameBoard() {
 
     const getBoard = () => board
 
-    const addMarker = (row, column, player) => {
+    const addMarker = (row, column, playerMarker) => {
         let chosenCell = board[row][column].getValue()
 
         if (chosenCell === 1 || chosenCell === 2) {
             console.log('error, choose a free Cell')
-            return
+            return 'error'
         } 
         if (chosenCell === 0) {
-            board[row][column].markCell(player)
+            board[row][column].markCell(playerMarker)
         }
     }
 
@@ -31,7 +31,13 @@ function GameBoard() {
         console.table(boardWithCellValues)
     }
 
-    return {getBoard, addMarker, printBoard}
+    const getBoardWithMarks = () => {
+        return board.map((row) => {
+            return row.map((Cell) => Cell.getValue())
+        })
+    }
+
+    return {getBoard, addMarker, printBoard, getBoardWithMarks}
 }
 
 function Cell() {
@@ -66,10 +72,28 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
         console.log(`${getActivePlayer().name}'s turn. `)
     }
 
+    const checkForWinner = () => {
+        let winCheck = false
+        const boardArray = board.getBoardWithMarks()
+        
+        boardArray.forEach((row) => {
+            if (row[0] === row[1] && row[1] === row[2] && row[0] !== 0) {
+                winCheck = true
+                console.log('AAAAAAAAAAAAAaaaaaaaaaaaaaaaa')
+            }
+        })
+    }
+
     const playRound = (row, column) => {
         console.log(`Adding ${getActivePlayer().name}'s mark to row:${row+1} column:${column+1} ...`)
         
-        board.addMarker(row, column, getActivePlayer().mark)
+        const errorCheck = board.addMarker(row, column, getActivePlayer().mark)
+        if (errorCheck === 'error') return
+
+        checkForWinner()
+
+        switchActivePlayer()
+        printNewRound()
 
     }
 
@@ -85,7 +109,18 @@ const game = GameBoard()
 // game.printBoard()
 
 const gc = GameController()
-gc.printNewRound()
+// gc.printNewRound()
+gc.playRound(0,0)
+gc.playRound(1,1)
+gc.playRound(0,1)
+gc.playRound(2,1)
+gc.playRound(0,2)
+// gc.playRound(2,1)
+
+
+
+
+
 
 // game.addMarker(1,2,2)
 // game.printBoard()
