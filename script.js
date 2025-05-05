@@ -151,7 +151,7 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
             console.log('YOU WONNNNNNNN')
             board.printBoard()
             gameOver = true
-        } else if(round === 9) {
+        } else if(round > 8) {
             console.log(`It's a DRAWWWWWWWWWWW`)
             gameOver = true
         } else {
@@ -175,10 +175,15 @@ function GameController(playerOne = 'Player One', playerTwo = 'Player Two') {
 const gc = GameController()
 gc.playRound(0,0)
 gc.playRound(0,1)
-gc.playRound(1,1)
 gc.playRound(0,2)
-gc.playRound(2,2)
+gc.playRound(1,0)
 gc.playRound(1,2)
+gc.playRound(1,1)
+gc.playRound(2,0)
+gc.playRound(2,2)
+gc.playRound(2,1)
+// gc.playRound()
+
 
 
 
