@@ -92,7 +92,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   ];
 
   const board = GameBoard();
-  const gameMessages = board.getGameMessages();
+  // const gameMessages = board.getGameMessages();
   let activePlayer = players[0];
   let gameOver = false;
   let round = 0;
@@ -209,8 +209,6 @@ function ScreenController() {
 
     playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
-    // let rowIndex = 0;
-
     board.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
         const cellButton = document.createElement("button");
@@ -220,7 +218,6 @@ function ScreenController() {
         cellButton.textContent = cell.getValue() === 0 ? "" : cell.getValue();
         boardDiv.appendChild(cellButton);
       });
-      // rowIndex++;
     });
   };
 
@@ -228,9 +225,11 @@ function ScreenController() {
     gameMessagesDiv.textContent = "";
 
     const gameMessages = game.getGameMessages();
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent = gameMessages.error;
-    gameMessagesDiv.appendChild(errorMessage);
+    if (gameMessages.error !== "") {
+      const errorMessage = document.createElement("p");
+      errorMessage.textContent = gameMessages.error;
+      gameMessagesDiv.appendChild(errorMessage);
+    }
     // gameMessages.forEach((message) => {
     //   const messageP = document.createElement("p");
     //   messageP.textContent = message;
@@ -264,7 +263,7 @@ ScreenController();
 // game.addMarker(1,2,1)
 // game.printBoard()
 
-const gc = GameController();
+// const gc = GameController();
 // gc.playRound(0, 0);
 // gc.playRound(0, 1);
 // gc.playRound(0, 2);
