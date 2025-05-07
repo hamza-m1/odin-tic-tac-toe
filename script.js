@@ -296,6 +296,7 @@ function ScreenController() {
     players[0].wentFirst = !players[0].wentFirst;
     game.resetRoundCount();
     game.resetIsGameOver();
+    updateScreen();
   });
 
   boardDiv.addEventListener("click", clickHandlerBoard);
