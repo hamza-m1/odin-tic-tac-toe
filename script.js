@@ -168,8 +168,10 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     }
   };
 
-  return { getActivePlayer, printNewRound, playRound, isGameOver, roundCount };
+  return { getActivePlayer, playRound, isGameOver, roundCount };
 }
+
+function ScreenController() {}
 
 // const game = GameBoard()
 // console.log(game.getBoardWithMarksColumn())
