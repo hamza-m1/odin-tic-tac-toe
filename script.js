@@ -11,11 +11,11 @@ function GameBoard() {
   }
 
   let gameMessages = {
-    error: "",
+    mes: "",
   };
   const getGameMessages = () => gameMessages;
-  const clearErrorMessage = () => {
-    gameMessages.error = "";
+  const clearMessage = () => {
+    gameMessages.mes = "";
   };
 
   const getBoard = () => board;
@@ -24,8 +24,8 @@ function GameBoard() {
     let chosenCell = board[row][column].getValue();
 
     if (chosenCell === "o" || chosenCell === "x") {
-      console.log("error, choose a free Cell");
-      gameMessages.error = "error, choose a free Cell";
+      // console.log("error, choose a free Cell");
+      gameMessages.mes = "error, choose a free Cell";
       return "error";
     }
     if (chosenCell === 0) {
@@ -66,7 +66,7 @@ function GameBoard() {
     getBoardWithMarks,
     getBoardWithMarksColumn,
     getGameMessages,
-    clearErrorMessage,
+    clearMessage,
   };
 }
 
@@ -92,7 +92,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   ];
 
   const board = GameBoard();
-  // const gameMessages = board.getGameMessages();
+  const gameMessages = board.getGameMessages();
   let activePlayer = players[0];
   let gameOver = false;
   let round = 0;
@@ -113,7 +113,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
   const printNewRound = () => {
     board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn. `);
+    // console.log(`${getActivePlayer().name}'s turn. `);
   };
 
   const checkForWinner = () => {
@@ -173,10 +173,12 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     if (checkForWinner()) {
       board.printBoard();
       console.log("YOU WONNNNNNNN");
+      gameMessages.mes = `${getActivePlayer().name} WINS`;
       gameOver = true;
     } else if (round > 8) {
       board.printBoard();
       console.log(`It's a DRAWWWWWWWWWWW`);
+      gameMessages.mes = `It's a draw...`;
       gameOver = true;
     } else {
       switchActivePlayer();
@@ -191,7 +193,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     roundCount,
     getBoard: board.getBoard,
     getGameMessages: board.getGameMessages,
-    clearErrorMessage: board.clearErrorMessage,
+    clearMessage: board.clearMessage,
   };
 }
 
@@ -225,10 +227,17 @@ function ScreenController() {
     gameMessagesDiv.textContent = "";
 
     const gameMessages = game.getGameMessages();
-    if (gameMessages.error !== "") {
-      const errorMessage = document.createElement("p");
-      errorMessage.textContent = gameMessages.error;
-      gameMessagesDiv.appendChild(errorMessage);
+
+    if (gameMessages.mes !== "" && !game.isGameOver()) {
+      const MessageP = document.createElement("p");
+      MessageP.textContent = gameMessages.mes;
+      MessageP.classList.add("errorMes");
+      gameMessagesDiv.appendChild(MessageP);
+    }
+    if (game.isGameOver()) {
+      const messageP = document.createElement("p");
+      messageP.textContent = gameMessages.mes;
+      gameMessagesDiv.appendChild(messageP);
     }
     // gameMessages.forEach((message) => {
     //   const messageP = document.createElement("p");
@@ -237,7 +246,7 @@ function ScreenController() {
     // });
     // game.clearGameMessages();
 
-    game.clearErrorMessage();
+    game.clearMessage();
   };
 
   function clickHandlerBoard(e) {

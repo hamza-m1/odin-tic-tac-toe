@@ -39,6 +39,6 @@ body {
     align-items: center;
 }
 
-.message {
-    
+.errorMes {
+    color: red;
 }
