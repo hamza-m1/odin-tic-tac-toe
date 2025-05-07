@@ -10,6 +10,23 @@ function GameBoard() {
     }
   }
 
+  const resetBoard = () => {
+    // board = [];
+
+    board.forEach((row) => {
+      row.forEach((cell) => {
+        cell.markCell(0);
+      });
+    });
+
+    // for (let i = 0; i < rows; i++) {
+    //   board[i] = [];
+    //   for (let j = 0; j < columns; j++) {
+    //     board[i].push(Cell());
+    //   }
+    // }
+  };
+
   let gameMessages = {
     mes: "",
   };
@@ -27,8 +44,7 @@ function GameBoard() {
       // console.log("error, choose a free Cell");
       gameMessages.mes = "error, choose a free Cell";
       return "error";
-    }
-    if (chosenCell === 0) {
+    } else if (chosenCell === 0) {
       board[row][column].markCell(playerMarker);
     }
   };
@@ -67,6 +83,7 @@ function GameBoard() {
     getBoardWithMarksColumn,
     getGameMessages,
     clearMessage,
+    resetBoard,
   };
 }
 
@@ -84,6 +101,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     {
       name: playerOne,
       mark: "o",
+      wentFirst: true,
     },
     {
       name: playerTwo,
@@ -107,9 +125,15 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
   const getActivePlayer = () => activePlayer;
 
+  const getPlayers = () => players;
+
   const isGameOver = () => gameOver;
 
+  const resetIsGameOver = () => (gameOver = false);
+
   const roundCount = () => round;
+
+  const resetRoundCount = () => (round = 0);
 
   const printNewRound = () => {
     board.printBoard();
@@ -157,7 +181,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   const playRound = (row, column) => {
     if (gameOver) return;
 
-    if (round === 0) console.log(`${getActivePlayer().name}'s turn. `);
+    // if (round === 0) console.log(`${getActivePlayer().name}'s turn. `);
 
     console.log(
       `Adding ${getActivePlayer().name}'s mark to row:${row + 1} column:${
@@ -172,12 +196,12 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
     if (checkForWinner()) {
       board.printBoard();
-      console.log("YOU WONNNNNNNN");
+      // console.log("YOU WONNNNNNNN");
       gameMessages.mes = `${getActivePlayer().name} WINS`;
       gameOver = true;
     } else if (round > 8) {
       board.printBoard();
-      console.log(`It's a DRAWWWWWWWWWWW`);
+      // console.log(`It's a DRAWWWWWWWWWWW`);
       gameMessages.mes = `It's a draw...`;
       gameOver = true;
     } else {
@@ -188,12 +212,17 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
   return {
     getActivePlayer,
+    switchActivePlayer,
+    getPlayers,
     playRound,
     isGameOver,
     roundCount,
     getBoard: board.getBoard,
     getGameMessages: board.getGameMessages,
     clearMessage: board.clearMessage,
+    resetBoard: board.resetBoard,
+    resetRoundCount,
+    resetIsGameOver,
   };
 }
 
@@ -202,6 +231,7 @@ function ScreenController() {
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".board");
   const gameMessagesDiv = document.querySelector(".gameMessages");
+  const buttonsDiv = document.querySelector(".buttons");
 
   const updateScreen = () => {
     boardDiv.textContent = "";
@@ -239,12 +269,6 @@ function ScreenController() {
       messageP.textContent = gameMessages.mes;
       gameMessagesDiv.appendChild(messageP);
     }
-    // gameMessages.forEach((message) => {
-    //   const messageP = document.createElement("p");
-    //   messageP.textContent = message;
-    //   gameMessagesDiv.appendChild(messageP);
-    // });
-    // game.clearGameMessages();
 
     game.clearMessage();
   };
@@ -255,10 +279,24 @@ function ScreenController() {
 
     if (!rowCoord) return;
 
+    if (game.isGameOver()) return;
     game.playRound(+rowCoord, +colCoord);
     updateScreen();
     updateMessages();
   }
+
+  buttonsDiv.addEventListener("click", () => {
+    game.resetBoard();
+    const players = game.getPlayers();
+    if (players[0].wentFirst && game.getActivePlayer() === players[0]) {
+      game.switchActivePlayer();
+    } else if (!players[0].wentFirst && game.getActivePlayer() === players[1]) {
+      game.switchActivePlayer();
+    }
+    players[0].wentFirst = !players[0].wentFirst;
+    game.resetRoundCount();
+    game.resetIsGameOver();
+  });
 
   boardDiv.addEventListener("click", clickHandlerBoard);
   updateScreen();
