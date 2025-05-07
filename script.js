@@ -196,8 +196,8 @@ function ScreenController() {
       row.forEach((cell, colIndex) => {
         const cellButton = document.createElement("button");
         cellButton.classList.add("cell");
-        cellButton.dataset.rowCoord = rowIndex;
-        cellButton.dataset.colCoord = colIndex;
+        cellButton.dataset.rowCoord = +rowIndex;
+        cellButton.dataset.colCoord = +colIndex;
         cellButton.textContent = cell.getValue();
         boardDiv.appendChild(cellButton);
       });
@@ -211,7 +211,7 @@ function ScreenController() {
 
     if (!rowCoord) return;
 
-    game.playRound(rowCoord, colCoord);
+    game.playRound(+rowCoord, +colCoord);
     updateScreen();
   }
 
