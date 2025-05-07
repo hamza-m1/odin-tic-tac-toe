@@ -173,13 +173,53 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     playRound,
     isGameOver,
     roundCount,
-    getBoard: board.getBoard(),
+    getBoard: board.getBoard,
   };
 }
 
 function ScreenController() {
   const game = GameController();
+  const playerTurnDiv = document.querySelector(".turn");
+  const boardDiv = document.querySelector(".board");
+
+  const updateScreen = () => {
+    boardDiv.textContent = "";
+
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
+    // let rowIndex = 0;
+
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        const cellButton = document.createElement("button");
+        cellButton.classList.add("cell");
+        cellButton.dataset.rowCoord = rowIndex;
+        cellButton.dataset.colCoord = colIndex;
+        cellButton.textContent = cell.getValue();
+        boardDiv.appendChild(cellButton);
+      });
+      // rowIndex++;
+    });
+  };
+
+  function clickHandlerBoard(e) {
+    const rowCoord = e.target.dataset.rowCoord;
+    const colCoord = e.target.dataset.colCoord;
+
+    if (!rowCoord) return;
+
+    game.playRound(rowCoord, colCoord);
+    updateScreen();
+  }
+
+  boardDiv.addEventListener("click", clickHandlerBoard);
+  updateScreen();
 }
+
+ScreenController();
 
 // const game = GameBoard()
 // console.log(game.getBoardWithMarksColumn())
@@ -187,15 +227,15 @@ function ScreenController() {
 // game.printBoard()
 
 const gc = GameController();
-gc.playRound(0, 0);
-gc.playRound(0, 1);
-gc.playRound(0, 2);
-gc.playRound(1, 0);
-gc.playRound(1, 2);
-gc.playRound(1, 1);
-gc.playRound(2, 0);
-gc.playRound(2, 2);
-gc.playRound(2, 1);
+// gc.playRound(0, 0);
+// gc.playRound(0, 1);
+// gc.playRound(0, 2);
+// gc.playRound(1, 0);
+// gc.playRound(1, 2);
+// gc.playRound(1, 1);
+// gc.playRound(2, 0);
+// gc.playRound(2, 2);
+// gc.playRound(2, 1);
 // gc.playRound()
 
 // game.addMarker(1,2,2)
