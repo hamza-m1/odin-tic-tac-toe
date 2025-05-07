@@ -155,12 +155,12 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     round++;
 
     if (checkForWinner()) {
-      console.log("YOU WONNNNNNNN");
       board.printBoard();
+      console.log("YOU WONNNNNNNN");
       gameOver = true;
     } else if (round > 8) {
-      console.log(`It's a DRAWWWWWWWWWWW`);
       board.printBoard();
+      console.log(`It's a DRAWWWWWWWWWWW`);
       gameOver = true;
     } else {
       switchActivePlayer();
@@ -168,10 +168,18 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     }
   };
 
-  return { getActivePlayer, playRound, isGameOver, roundCount };
+  return {
+    getActivePlayer,
+    playRound,
+    isGameOver,
+    roundCount,
+    getBoard: board.getBoard(),
+  };
 }
 
-function ScreenController() {}
+function ScreenController() {
+  const game = GameController();
+}
 
 // const game = GameBoard()
 // console.log(game.getBoardWithMarksColumn())
@@ -193,9 +201,9 @@ gc.playRound(2, 1);
 // game.addMarker(1,2,2)
 // game.printBoard()
 
-const testButton = document.querySelector(".test-button");
+// const testButton = document.querySelector(".test-button");
 
-testButton.addEventListener("click", () => {
-  console.log("hhhhh");
-  GameBoard();
-});
+// testButton.addEventListener("click", () => {
+//   console.log("hhhhh");
+//   GameBoard();
+// });
