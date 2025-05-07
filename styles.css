@@ -1,5 +1,6 @@
 body {
     background-color: rgb(187, 187, 187);
+    box-sizing: border-box;
 }
 
 .board {
@@ -23,4 +24,21 @@ body {
     border: 1px solid grey;
     background: rgb(156, 204, 255);
     cursor: pointer;
+}
+
+.gameMessages {
+    height: 150px;
+    width: 500px;
+    background-color: antiquewhite;
+    /* padding: 2px; */
+    border: 3px solid black;
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    
 }

@@ -10,13 +10,22 @@ function GameBoard() {
     }
   }
 
+  let gameMessages = {
+    error: "",
+  };
+  const getGameMessages = () => gameMessages;
+  const clearErrorMessage = () => {
+    gameMessages.error = "";
+  };
+
   const getBoard = () => board;
 
   const addMarker = (row, column, playerMarker) => {
     let chosenCell = board[row][column].getValue();
 
-    if (chosenCell === 1 || chosenCell === 2) {
+    if (chosenCell === "o" || chosenCell === "x") {
       console.log("error, choose a free Cell");
+      gameMessages.error = "error, choose a free Cell";
       return "error";
     }
     if (chosenCell === 0) {
@@ -56,6 +65,8 @@ function GameBoard() {
     printBoard,
     getBoardWithMarks,
     getBoardWithMarksColumn,
+    getGameMessages,
+    clearErrorMessage,
   };
 }
 
@@ -72,18 +83,23 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   const players = [
     {
       name: playerOne,
-      mark: 1,
+      mark: "o",
     },
     {
       name: playerTwo,
-      mark: 2,
+      mark: "x",
     },
   ];
 
   const board = GameBoard();
+  const gameMessages = board.getGameMessages();
   let activePlayer = players[0];
   let gameOver = false;
   let round = 0;
+
+  // const getGameMessages = () => gameMessages;
+
+  // const clearGameMessages = () => board.clearGameMessages();
 
   const switchActivePlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -174,6 +190,8 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     isGameOver,
     roundCount,
     getBoard: board.getBoard,
+    getGameMessages: board.getGameMessages,
+    clearErrorMessage: board.clearErrorMessage,
   };
 }
 
@@ -181,6 +199,7 @@ function ScreenController() {
   const game = GameController();
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".board");
+  const gameMessagesDiv = document.querySelector(".gameMessages");
 
   const updateScreen = () => {
     boardDiv.textContent = "";
@@ -198,11 +217,28 @@ function ScreenController() {
         cellButton.classList.add("cell");
         cellButton.dataset.rowCoord = +rowIndex;
         cellButton.dataset.colCoord = +colIndex;
-        cellButton.textContent = cell.getValue();
+        cellButton.textContent = cell.getValue() === 0 ? "" : cell.getValue();
         boardDiv.appendChild(cellButton);
       });
       // rowIndex++;
     });
+  };
+
+  const updateMessages = () => {
+    gameMessagesDiv.textContent = "";
+
+    const gameMessages = game.getGameMessages();
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = gameMessages.error;
+    gameMessagesDiv.appendChild(errorMessage);
+    // gameMessages.forEach((message) => {
+    //   const messageP = document.createElement("p");
+    //   messageP.textContent = message;
+    //   gameMessagesDiv.appendChild(messageP);
+    // });
+    // game.clearGameMessages();
+
+    game.clearErrorMessage();
   };
 
   function clickHandlerBoard(e) {
@@ -213,10 +249,12 @@ function ScreenController() {
 
     game.playRound(+rowCoord, +colCoord);
     updateScreen();
+    updateMessages();
   }
 
   boardDiv.addEventListener("click", clickHandlerBoard);
   updateScreen();
+  updateMessages();
 }
 
 ScreenController();
