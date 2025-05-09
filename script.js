@@ -285,7 +285,7 @@ function ScreenController() {
     updateMessages();
   }
 
-  buttonsDiv.addEventListener("click", () => {
+  function resetClickHandler(e) {
     game.resetBoard();
     const players = game.getPlayers();
     if (players[0].wentFirst && game.getActivePlayer() === players[0]) {
@@ -297,9 +297,10 @@ function ScreenController() {
     game.resetRoundCount();
     game.resetIsGameOver();
     updateScreen();
-  });
+  }
 
   boardDiv.addEventListener("click", clickHandlerBoard);
+  buttonsDiv.addEventListener("click", resetClickHandler);
   updateScreen();
   updateMessages();
 }
