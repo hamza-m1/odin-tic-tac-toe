@@ -3,7 +3,23 @@ body {
     box-sizing: border-box;
 }
 
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 450px 200px 50px;
+    justify-items: center;
+    align-items: center;
+}
+
+.title {
+    grid-column: 1 / 4;
+    grid-row-start: 1;
+}
+
 .board {
+    grid-column: 2 / 3;
+    grid-row-start: 2;
+
     display: grid;
     height: 400px;
     width: 400px;
@@ -27,6 +43,9 @@ body {
 }
 
 .gameMessages {
+    grid-column: 2;
+    grid-row: 3;
+
     height: 150px;
     width: 500px;
     background-color: antiquewhite;
@@ -37,6 +56,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.buttons {
+    grid-column-start: 2;
+    grid-row-start: 4;
 }
 
 .errorMes {
