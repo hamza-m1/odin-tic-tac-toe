@@ -57,6 +57,10 @@ body {
     cursor: pointer;
 }
 
+.cell:hover {
+    background-color: rgb(234, 246, 255);
+}
+
 .gameMessages {
     grid-column: 2;
     grid-row: 3;
@@ -98,7 +102,6 @@ body {
 
 .playerName, .score {
     font-size: 25px;
-    /* padding: 0px; */
 }
 
 .resetButton {
