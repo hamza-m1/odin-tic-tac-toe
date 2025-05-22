@@ -11,29 +11,18 @@ function GameBoard() {
   }
 
   const resetBoard = () => {
-    // board = [];
-
     board.forEach((row) => {
       row.forEach((cell) => {
         cell.markCell(0);
       });
     });
-
-    // for (let i = 0; i < rows; i++) {
-    //   board[i] = [];
-    //   for (let j = 0; j < columns; j++) {
-    //     board[i].push(Cell());
-    //   }
-    // }
   };
 
   let gameMessages = {
     mes: "",
   };
   const getGameMessages = () => gameMessages;
-  const clearMessage = () => {
-    gameMessages.mes = "";
-  };
+  const clearMessage = () => (gameMessages.mes = "");
 
   const getBoard = () => board;
 
@@ -52,7 +41,6 @@ function GameBoard() {
     const boardWithCellValues = board.map((row) => {
       return row.map((Cell) => Cell.getValue());
     });
-    console.table(boardWithCellValues);
   };
 
   const getBoardWithMarks = () => {
@@ -124,6 +112,10 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
   const getPlayers = () => players;
 
+  const getPlayerOneScore = () => players[0].score;
+
+  const getPlayerTwoScore = () => players[1].score;
+
   const isGameOver = () => gameOver;
 
   const resetIsGameOver = () => (gameOver = false);
@@ -177,12 +169,6 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   const playRound = (row, column) => {
     if (gameOver) return;
 
-    console.log(
-      `Adding ${getActivePlayer().name}'s mark to row:${row + 1} column:${
-        column + 1
-      } ...`
-    );
-
     const errorCheck = board.addMarker(row, column, getActivePlayer().mark);
     if (errorCheck === "error") return;
 
@@ -191,7 +177,7 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     if (checkForWinner()) {
       board.printBoard();
       gameMessages.mes = `${getActivePlayer().name} WINS`;
-      // getActivePlayer.score += 1;
+      activePlayer.score += 1;
       gameOver = true;
     } else if (round > 8) {
       board.printBoard();
@@ -216,6 +202,8 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
     resetBoard: board.resetBoard,
     resetRoundCount,
     resetIsGameOver,
+    getPlayerOneScore,
+    getPlayerTwoScore,
   };
 }
 
@@ -225,9 +213,27 @@ function ScreenController() {
   const boardDiv = document.querySelector(".board");
   const gameMessagesDiv = document.querySelector(".gameMessages");
   const buttonsDiv = document.querySelector(".buttons");
+  const playerOneContainer = document.querySelector(".playerOneContainer");
+  const playerTwoContainer = document.querySelector(".playerTwoContainer");
+
+  const updateScores = () => {
+    playerOneContainer.textContent = "";
+    playerTwoContainer.textContent = "";
+
+    const playerOneScore = document.createElement("p");
+    playerOneScore.textContent = `Score: ${game.getPlayerOneScore()}`;
+    playerOneScore.classList.add("score");
+    playerOneContainer.appendChild(playerOneScore);
+
+    const playerTwoScore = document.createElement("p");
+    playerTwoScore.textContent = `Score: ${game.getPlayerTwoScore()}`;
+    playerTwoScore.classList.add("score");
+    playerTwoContainer.appendChild(playerTwoScore);
+  };
 
   const updateScreen = () => {
     boardDiv.textContent = "";
+    updateScores();
 
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
@@ -300,30 +306,3 @@ function ScreenController() {
 }
 
 ScreenController();
-
-// const game = GameBoard()
-// console.log(game.getBoardWithMarksColumn())
-// game.addMarker(1,2,1)
-// game.printBoard()
-
-// const gc = GameController();
-// gc.playRound(0, 0);
-// gc.playRound(0, 1);
-// gc.playRound(0, 2);
-// gc.playRound(1, 0);
-// gc.playRound(1, 2);
-// gc.playRound(1, 1);
-// gc.playRound(2, 0);
-// gc.playRound(2, 2);
-// gc.playRound(2, 1);
-// gc.playRound()
-
-// game.addMarker(1,2,2)
-// game.printBoard()
-
-// const testButton = document.querySelector(".test-button");
-
-// testButton.addEventListener("click", () => {
-//   console.log("hhhhh");
-//   GameBoard();
-// });
