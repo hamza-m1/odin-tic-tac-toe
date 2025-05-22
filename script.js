@@ -220,14 +220,22 @@ function ScreenController() {
     playerOneContainer.textContent = "";
     playerTwoContainer.textContent = "";
 
+    const playerOneName = document.createElement("p");
+    playerOneName.textContent = game.getPlayers()[0].name;
+    playerOneName.classList.add("playerName");
     const playerOneScore = document.createElement("p");
     playerOneScore.textContent = `Score: ${game.getPlayerOneScore()}`;
     playerOneScore.classList.add("score");
+    playerOneContainer.appendChild(playerOneName);
     playerOneContainer.appendChild(playerOneScore);
 
+    const playerTwoName = document.createElement("p");
+    playerTwoName.textContent = game.getPlayers()[1].name;
+    playerTwoName.classList.add("playerName");
     const playerTwoScore = document.createElement("p");
     playerTwoScore.textContent = `Score: ${game.getPlayerTwoScore()}`;
     playerTwoScore.classList.add("score");
+    playerTwoContainer.appendChild(playerTwoName);
     playerTwoContainer.appendChild(playerTwoScore);
   };
 
