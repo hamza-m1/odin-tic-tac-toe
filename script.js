@@ -41,7 +41,6 @@ function GameBoard() {
     let chosenCell = board[row][column].getValue();
 
     if (chosenCell === "o" || chosenCell === "x") {
-      // console.log("error, choose a free Cell");
       gameMessages.mes = "error, choose a free Cell";
       return "error";
     } else if (chosenCell === 0) {
@@ -102,10 +101,12 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
       name: playerOne,
       mark: "o",
       wentFirst: true,
+      score: 0,
     },
     {
       name: playerTwo,
       mark: "x",
+      score: 0,
     },
   ];
 
@@ -114,10 +115,6 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   let activePlayer = players[0];
   let gameOver = false;
   let round = 0;
-
-  // const getGameMessages = () => gameMessages;
-
-  // const clearGameMessages = () => board.clearGameMessages();
 
   const switchActivePlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -137,7 +134,6 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
   const printNewRound = () => {
     board.printBoard();
-    // console.log(`${getActivePlayer().name}'s turn. `);
   };
 
   const checkForWinner = () => {
@@ -181,8 +177,6 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
   const playRound = (row, column) => {
     if (gameOver) return;
 
-    // if (round === 0) console.log(`${getActivePlayer().name}'s turn. `);
-
     console.log(
       `Adding ${getActivePlayer().name}'s mark to row:${row + 1} column:${
         column + 1
@@ -196,12 +190,11 @@ function GameController(playerOne = "Player One", playerTwo = "Player Two") {
 
     if (checkForWinner()) {
       board.printBoard();
-      // console.log("YOU WONNNNNNNN");
       gameMessages.mes = `${getActivePlayer().name} WINS`;
+      // getActivePlayer.score += 1;
       gameOver = true;
     } else if (round > 8) {
       board.printBoard();
-      // console.log(`It's a DRAWWWWWWWWWWW`);
       gameMessages.mes = `It's a draw...`;
       gameOver = true;
     } else {
@@ -297,6 +290,7 @@ function ScreenController() {
     game.resetRoundCount();
     game.resetIsGameOver();
     updateScreen();
+    updateMessages();
   }
 
   boardDiv.addEventListener("click", clickHandlerBoard);
