@@ -25,9 +25,9 @@ body {
     width: 400px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    border: 1px solid black;
-    gap: 2px;
-    padding: 2px;
+    /* border: 1px solid black; */
+    gap: 6px;
+    /* padding: 2px; */
     background-color: rgb(0, 110, 255);
 }
 
@@ -37,7 +37,7 @@ body {
     align-items: center;
     text-align: center;
     font-size: 2rem;
-    border: 1px solid grey;
+    border: 0px solid grey;
     background: rgb(156, 204, 255);
     cursor: pointer;
 }
