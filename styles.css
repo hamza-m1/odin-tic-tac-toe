@@ -94,9 +94,11 @@ body {
     justify-content: center;
     align-items: center;
 
+    
     border: 2px solid var(--board-lines);
     border-radius: 15px;
-    padding: 10px;
+    padding: 20px;
+    gap: 20px;
     background-color: var(--board-background);
 }
 
@@ -107,9 +109,13 @@ body {
 .resetButton {
     padding: 15px;
     border: 2px solid var(--board-lines);
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 25px;
     cursor: pointer;
+}
+
+.resetButton:hover {
+    box-shadow: 0px 0px 10px grey;
 }
 
 .game-logo {
