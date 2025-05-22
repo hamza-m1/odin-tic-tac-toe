@@ -30,7 +30,7 @@ function GameBoard() {
     let chosenCell = board[row][column].getValue();
 
     if (chosenCell === "o" || chosenCell === "x") {
-      gameMessages.mes = "error, choose a free Cell";
+      gameMessages.mes = "Choose a free Cell";
       return "error";
     } else if (chosenCell === 0) {
       board[row][column].markCell(playerMarker);
@@ -274,6 +274,7 @@ function ScreenController() {
     if (game.isGameOver()) {
       const messageP = document.createElement("p");
       messageP.textContent = gameMessages.mes;
+      messageP.classList.add("message");
       gameMessagesDiv.appendChild(messageP);
     }
 

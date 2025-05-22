@@ -1,14 +1,26 @@
-body {
-    background-color: rgb(187, 187, 187);
+:root {
+    --background-color: rgb(235, 235, 235);
+    --green: rgb(30, 176, 91);
+    --red: red;
+    --board-lines: rgb(96, 114, 137);
+    --board-background: rgb(244, 244, 244);
+}
+
+* {
     box-sizing: border-box;
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
 }
 
 body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px 450px 200px 50px;
+    grid-template-rows: 100px 450px 75px 125px 1fr;
     justify-items: center;
     align-items: center;
+
+    background-color: var(--background-color);
 }
 
 .title {
@@ -16,19 +28,22 @@ body {
     grid-row-start: 1;
 }
 
+.turn {
+    font-size: 40px;
+}
+
 .board {
     grid-column: 2 / 3;
     grid-row-start: 2;
 
     display: grid;
-    height: 400px;
-    width: 400px;
+    height: 399px;
+    width: 399px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    /* border: 1px solid black; */
     gap: 6px;
-    /* padding: 2px; */
-    background-color: rgb(0, 110, 255);
+    background-color: var(--board-lines);
+    box-shadow: 0px 0px 30px grey;
 }
 
 .cell {
@@ -38,7 +53,7 @@ body {
     text-align: center;
     font-size: 2rem;
     border: 0px solid grey;
-    background: rgb(156, 204, 255);
+    background: var(--board-background);
     cursor: pointer;
 }
 
@@ -46,16 +61,22 @@ body {
     grid-column: 2;
     grid-row: 3;
 
-    height: 150px;
+    height: 50px;
     width: 500px;
-    background-color: antiquewhite;
-    /* padding: 2px; */
-    border: 3px solid black;
-    margin-top: 20px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.gameMessages .message {
+    font-size: 30px;
+    color: var(--green);
+}
+
+.errorMes {
+    color: var(--red);
+    font-size: 30px;
 }
 
 .buttons {
@@ -63,6 +84,37 @@ body {
     grid-row-start: 4;
 }
 
-.errorMes {
-    color: red;
+.playerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid var(--board-lines);
+    border-radius: 15px;
+    padding: 10px;
+    background-color: var(--board-background);
+}
+
+.playerName, .score {
+    font-size: 25px;
+    /* padding: 0px; */
+}
+
+.resetButton {
+    padding: 15px;
+    border: 2px solid var(--board-lines);
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.game-logo {
+    grid-row-start: 5;
+    grid-column: 1 / 4;
+
+    font-size: 50px;
+    background-color: var(--board-background);
+    padding: 20px 50px;
+    border-radius: 50px;
 }
