@@ -222,16 +222,16 @@ function ScreenController() {
   dialog.showModal();
 
   startBtn.addEventListener("click", (e) => {
-    const playerOneName = document.getElementById("playerOneName");
-    const playerTwoName = document.getElementById("playerTwoName");
+    const playerOneName = document.getElementById("playerOneName").value;
+    const playerTwoName = document.getElementById("playerTwoName").value;
 
     e.preventDefault();
 
     if (playerOneName !== "") {
-      game.getPlayers()[0].name = playerOneName.value;
+      game.getPlayers()[0].name = playerOneName;
     }
     if (playerTwoName !== "") {
-      game.getPlayers()[1].name = playerTwoName.value;
+      game.getPlayers()[1].name = playerTwoName;
     }
 
     dialog.close(playerOneName);
