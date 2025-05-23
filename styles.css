@@ -50,6 +50,8 @@ body {
 #form input[type=submit] {
     cursor: pointer;
     font-size: 20px;
+    padding: 12px;
+    border: 2px solid var(--board-lines);
 }
 
 .title {
