@@ -216,6 +216,29 @@ function ScreenController() {
   const playerOneContainer = document.querySelector(".playerOneContainer");
   const playerTwoContainer = document.querySelector(".playerTwoContainer");
 
+  const dialog = document.getElementById("dialog");
+  const startBtn = document.getElementById("start-btn");
+
+  dialog.showModal();
+
+  startBtn.addEventListener("click", (e) => {
+    const playerOneName = document.getElementById("playerOneName");
+    const playerTwoName = document.getElementById("playerTwoName");
+
+    e.preventDefault();
+
+    if (playerOneName !== "") {
+      game.getPlayers()[0].name = playerOneName.value;
+    }
+    if (playerTwoName !== "") {
+      game.getPlayers()[1].name = playerTwoName.value;
+    }
+
+    dialog.close(playerOneName);
+    updateScreen();
+    updateMessages();
+  });
+
   const updateScores = () => {
     playerOneContainer.textContent = "";
     playerTwoContainer.textContent = "";
